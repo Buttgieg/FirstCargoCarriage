@@ -121,7 +121,7 @@
 </head>
 <body>
     <header>
-        <img src="Images/Logo.png" alt="Logo">
+        <img src="Images/Logos.png" alt="Logo">
         <h1>First Cargo Company</h1>
     </header>
     
@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div class="status" id="statusMessage">Your package is on the way.</div>
-            <div class="expected-date" id="expectedDate">Expected delivery: Monday, June 8, 2025, by 8:00 PM</div>
+            <div class="expected-date" id="expectedDate">Kindly expect the delivery after payment has been made </div>
         </div>
     </div>
 
@@ -203,7 +203,7 @@
                 ];
 
                 statusMessage.textContent = statusMessages[data.status - 1];
-                expectedDate.textContent = `Expected delivery: ${data.expectedDate}`;
+            
                 resultDiv.style.display = "block";
             } else {
                 alert("Tracking number not found. Please try again.");
