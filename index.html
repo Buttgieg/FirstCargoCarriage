@@ -117,9 +117,19 @@
             margin-top: 10px;
             color: #555;
         }
+
+        .tracking-details {
+            margin-top: 20px;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .tracking-details p {
+            margin: 5px 0;
+        }
     </style>
 </head>
-<body>
+<body> 
     <header>
         <img src="Images/Logos.png" alt="Logo">
         <h1>First Cargo Company</h1>
@@ -159,7 +169,16 @@
                 </div>
             </div>
             <div class="status" id="statusMessage">Your package is on the way.</div>
-            <div class="expected-date" id="expectedDate">Kindly expect the delivery after payment has been made </div>
+            <div class="expected-date" id="expectedDate">Kindly expect the delivery after payment has been made</div>
+            
+            <!-- Tracking Details -->
+            <div id="trackingDetails" class="tracking-details">
+                <h3>Tracking Details:</h3>
+                <p><strong>Receiver Details:</strong></p>
+                <p><strong>Full Name:</strong> <span id="receiverName"></span></p>
+                <p><strong>Address:</strong> <span id="receiverAddress"></span></p>
+                <p><strong>Phone Number:</strong> <span id="receiverPhone"></span></p>
+            </div>
         </div>
     </div>
 
@@ -172,7 +191,10 @@
         const trackingData = {
             "TRACK-943872": {
                 status: 4,
-                expectedDate: "Monday, June 8, 2025, by 8:00 PM"
+                expectedDate: "Monday, June 8, 2025, by 8:00 PM",
+                receiverName: "Francisco Enrique Bailleres Martínez",
+                receiverAddress: "Sauce No. 82, Los Reyes, Ixtacala, Tlalnepantla, Estado de México, C.P. 54090",
+                receiverPhone: "+52 5523719655"
             }
         };
 
@@ -182,6 +204,10 @@
             const steps = document.querySelectorAll(".step");
             const statusMessage = document.getElementById("statusMessage");
             const expectedDate = document.getElementById("expectedDate");
+            const trackingDetails = document.getElementById("trackingDetails");
+            const receiverName = document.getElementById("receiverName");
+            const receiverAddress = document.getElementById("receiverAddress");
+            const receiverPhone = document.getElementById("receiverPhone");
 
             if (trackingData[trackingNumber]) {
                 const data = trackingData[trackingNumber];
@@ -203,11 +229,18 @@
                 ];
 
                 statusMessage.textContent = statusMessages[data.status - 1];
-            
+      
+
+                receiverName.textContent = data.receiverName;
+                receiverAddress.textContent = data.receiverAddress;
+                receiverPhone.textContent = data.receiverPhone;
+                
+                trackingDetails.style.display = "block";
                 resultDiv.style.display = "block";
             } else {
                 alert("Tracking number not found. Please try again.");
                 resultDiv.style.display = "none";
+                trackingDetails.style.display = "none";
             }
         }
     </script>
