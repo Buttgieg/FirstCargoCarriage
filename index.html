@@ -29,6 +29,10 @@
             margin-right: 15px;
         }
 
+        header h1 {
+            margin: 0;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -44,7 +48,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
+            margin: auto;
         }
 
         input[type="text"] {
@@ -68,109 +72,138 @@
             background-color: #0056b3;
         }
 
-        .tracking-details {
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 20px;
-            text-align: left;
         }
 
-        .tracking-details p {
-            margin: 5px 0;
+        .step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step span {
+            display: block;
+            width: 20px;
+            height: 20px;
+            margin: 0 auto 5px;
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+
+        .step.active span {
+            background-color: #007bff;
+        }
+
+        .step.active .line {
+            background-color: #007bff;
+        }
+
+        .line {
+            height: 2px;
+            flex: 1;
+            background-color: #ddd;
+            margin: 0 10px;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .expected-date {
+            margin-top: 10px;
+            color: #555;
         }
     </style>
 </head>
 <body>
     <header>
-        <img src="Images/Logo.png" alt="Company Logo">
-        <h1>First Cargo Carriage</h1>
+        <img src="Images/Logo.png" alt="Logo">
+        <h1>Company Name</h1>
     </header>
-
+    
     <div class="container">
         <h1>Package Tracking</h1>
         <p>Enter your tracking number below:</p>
         <input type="text" id="trackingNumber" placeholder="Enter tracking number">
         <button onclick="trackPackage()">Track</button>
 
-        <div id="trackingResult" class="tracking-details" style="display: none;">
-            <h3>Tracking Details:</h3>
-            <p><strong>Shipping Details:</strong></p>
-            <p><strong>Product Name:</strong> <span id="productName"></span></p>
-            <p><strong>Tracking Number:</strong> <span id="tracking"></span></p>
-            <p><strong>Sent Date:</strong> <span id="sentDate"></span></p>
-            <p><strong>Due Date:</strong> <span id="dueDate"></span></p>
-            <p><strong>Number of Days for Delivery:</strong> <span id="deliveryDays"></span></p>
-            <p><strong>Receiver Details:</strong></p>
-            <p><strong>Full Name:</strong> <span id="receiverName"></span></p>
-            <p><strong>Address:</strong> <span id="receiverAddress"></span></p>
-            <p><strong>Email:</strong> <span id="receiverEmail"></span></p>
-            <p><strong>Country:</strong> <span id="receiverCountry"></span></p>
-            <p><strong>Phone Number:</strong> <span id="receiverPhone"></span></p>
-            <p><strong>Sender Details:</strong></p>
-            <p><strong>Name:</strong> <span id="senderName"></span></p>
-            <p><strong>Country:</strong> <span id="senderCountry"></span></p>
-            <p><strong>Phone Number:</strong> <span id="senderPhone"></span></p>
-            <p><strong>Email:</strong> <span id="senderEmail"></span></p>
+        <div id="trackingResult" style="display: none;">
+            <div class="progress-bar">
+                <div class="step" id="step1">
+                    <span></span>
+                    <p>Shipping Soon</p>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="step2">
+                    <span></span>
+                    <p>Shipped</p>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="step3">
+                    <span></span>
+                    <p>On the Way</p>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="step4">
+                    <span></span>
+                    <p>Arrived in Mexico</p>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="step5">
+                    <span></span>
+                    <p>Ready for Collection</p>
+                </div>
+            </div>
+            <div class="status" id="statusMessage">Your package is on the way.</div>
+            <div class="expected-date" id="expectedDate">Expected delivery: Monday, June 8, 2025, by 8:00 PM</div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 First Cargo Carriage. All Rights Reserved.</p>
+        <p>&copy; 2025 Company Name. All Rights Reserved.</p>
     </footer>
 
     <script>
         // Simulated tracking data
         const trackingData = {
             "TRACK-943872": {
-                productName: "Box",
-                tracking: "TRACK-943872",
-                sentDate: "2025-01-10",
-                dueDate: "2025-01-17",
-                deliveryDays: 7,
-                receiverName: "Francisco Enrique Bailleres Martínez",
-                receiverAddress: "Sauce No. 82, Los Reyes, Ixtacala, Tlalnepantla, Estado de México, C.P. 54090",
-                receiverEmail: "e.bailleres@hotmail.com",
-                receiverCountry: "México",
-                receiverPhone: "+52 5523719655",
-                senderName: "Almeida Lisa",
-                senderCountry: "Damascus, Syria",
-                senderPhone: "+22946593847",
-                senderEmail: "almeidagwen386@gmail.com"
+                status: 4,
+                expectedDate: "Monday, June 8, 2025, by 8:00 PM"
             }
         };
 
         function trackPackage() {
             const trackingNumber = document.getElementById("trackingNumber").value;
             const resultDiv = document.getElementById("trackingResult");
-            const productName = document.getElementById("productName");
-            const tracking = document.getElementById("tracking");
-            const sentDate = document.getElementById("sentDate");
-            const dueDate = document.getElementById("dueDate");
-            const deliveryDays = document.getElementById("deliveryDays");
-            const receiverName = document.getElementById("receiverName");
-            const receiverAddress = document.getElementById("receiverAddress");
-            const receiverEmail = document.getElementById("receiverEmail");
-            const receiverCountry = document.getElementById("receiverCountry");
-            const receiverPhone = document.getElementById("receiverPhone");
-            const senderName = document.getElementById("senderName");
-            const senderCountry = document.getElementById("senderCountry");
-            const senderPhone = document.getElementById("senderPhone");
-            const senderEmail = document.getElementById("senderEmail");
+            const steps = document.querySelectorAll(".step");
+            const statusMessage = document.getElementById("statusMessage");
+            const expectedDate = document.getElementById("expectedDate");
 
             if (trackingData[trackingNumber]) {
                 const data = trackingData[trackingNumber];
-                productName.textContent = data.productName;
-                tracking.textContent = data.tracking;
-                sentDate.textContent = data.sentDate;
-                dueDate.textContent = data.dueDate;
-                deliveryDays.textContent = data.deliveryDays;
-                receiverName.textContent = data.receiverName;
-                receiverAddress.textContent = data.receiverAddress;
-                receiverEmail.textContent = data.receiverEmail;
-                receiverCountry.textContent = data.receiverCountry;
-                receiverPhone.textContent = data.receiverPhone;
-                senderName.textContent = data.senderName;
-                senderCountry.textContent = data.senderCountry;
-                senderPhone.textContent = data.senderPhone;
-                senderEmail.textContent = data.senderEmail;
+
+                steps.forEach((step, index) => {
+                    if (index < data.status) {
+                        step.classList.add("active");
+                    } else {
+                        step.classList.remove("active");
+                    }
+                });
+
+                const statusMessages = [
+                    "Your package is being prepared.",
+                    "Your package has been shipped.",
+                    "Your package is on the way.",
+                    "Your package has arrived in Mexico.",
+                    "Your package is ready for collection."
+                ];
+
+                statusMessage.textContent = statusMessages[data.status - 1];
+                expectedDate.textContent = `Expected delivery: ${data.expectedDate}`;
                 resultDiv.style.display = "block";
             } else {
                 alert("Tracking number not found. Please try again.");
@@ -180,4 +213,3 @@
     </script>
 </body>
 </html>
-
